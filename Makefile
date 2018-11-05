@@ -1,15 +1,18 @@
-# Suggested Makefile for CSE_1325 Homework #4 full_credit
 CXXFLAGS += --std=c++17
 
-main: main.o vehicle.o gas_vehicle.o electric_vehicle.o
-	${CXX} ${CXXFLAGS} -o main main.o vehicle.o gas_vehicle.o electric_vehicle.o
+main: main.o product.o donut.o java.o store.o
+	${CXX} ${CXXFLAGS} -o main main.o product.o donut.o java.o store.o
 main.o: main.cpp *.h
 	${CXX} ${CXXFLAGS} -c main.cpp
-vehicle.o: vehicle.cpp *.h
-	${CXX} ${CXXFLAGS} -c vehicle.cpp
-gas_vehicle.o: gas_vehicle.cpp vehicle.cpp *.h
-	${CXX} ${CXXFLAGS} -c gas_vehicle.cpp
-electric_vehicle.o: electric_vehicle.cpp vehicle.cpp *.h
-	${CXX} ${CXXFLAGS} -c electric_vehicle.cpp
+product.o: product.cpp *.h
+	${CXX} ${CXXFLAGS} -c product.cpp
+donut.o: donut.cpp donut.cpp *.h
+	${CXX} ${CXXFLAGS} -c donut.cpp
+java.o: java.cpp java.cpp *.h
+	${CXX} ${CXXFLAGS} -c java.cpp
+store.o: store.cpp store.cpp *.h
+	${CXX} ${CXXFLAGS} -c store.cpp
+
 clean:
 	-rm -f *.gch *.o main
+

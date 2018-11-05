@@ -1,9 +1,31 @@
-#include "gas_vehicle.h"
-#include "electric_vehicle.h"
+#include "donut.h"
+#include "java.h"
+#include "store.h"
+//#include "product.h" yo eta rakhnu hunna
 #include <iostream>
 #include <vector>
 
 int main() {
+
+
+
+Donut *pts = new Donut("hellop",4.4,5.5,Frosting::Unfrosted,true,Filling::Strawberry);
+pts->to_string();
+Java *pts1 = new Java("coffee",4.4,5.5,7);
+pts1->to_string();
+pts1->add_shot(Shot::Hazelnut);
+
+
+
+//donut.Donut::to_string();
+
+//donut.to_string();
+ 
+//std::cout<<"hello"<<std::endl;
+
+return 0;
+}
+/*
     std::vector<double> cost_per_gallon = {2.00, 2.25, 2.50, 3.00, 4.00};
     std::vector<double> cost_per_kwh = {0.05, 0.08, 0.11, 0.13, 0.15};
     std::vector<Electric_vehicle> evs = {
@@ -34,3 +56,4 @@ int main() {
     }
 
 }
+*/

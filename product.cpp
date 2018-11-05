@@ -1,11 +1,16 @@
-#include "vehicle.h"
+#include "product.h"
 
-Vehicle::Vehicle(int year, std::string make, std::string model, Body_style body_style)
-    : _year{year}, _make{make}, _model{model}, _body_style{body_style} { }
-std::string Vehicle::make() {return _make;}
-std::string Vehicle::model() {return _model;}
-int Vehicle::year() {return _year;}
+Product::Product(std::string name, double price, double cost)
+    : _name{name}, _price{price}, _cost{cost} { }
+
+std::string Product::name() {return _name;}
+
+double Product::price() {return _price;}
+
+double Product::cost() {return _cost;}
+/*
 Body_style Vehicle::body_style() {return _body_style;}
+
 std::string Vehicle::body_style_to_string() {
     if (body_style() == Body_style::SEDAN) return "Sedan"; 
     else if (body_style() == Body_style::HATCHBACK) return "Hatchback";
@@ -15,8 +20,6 @@ std::string Vehicle::body_style_to_string() {
     else return "SUV";
 
 }
-std::string Vehicle::to_string() {
-    return std::to_string(year()) + ' ' + make() + ' ' + model() + ' ' + body_style_to_string();
-}
+*/
 
  
