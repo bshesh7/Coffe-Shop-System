@@ -1,19 +1,14 @@
-#ifndef __PRODUCT_H
-#define __PRODUCT_H
+#pragma once
 #include <string>
-
-//enum class Body_style{SEDAN, HATCHBACK, MINIVAN, TRUCK, CROSSOVER, SUV};
+#include <ostream>
 
 class Product {
   public:
     Product(std::string name, double price, double cost);
     std::string name();
-    double price();
-    double cost();
-     void to_string();
+    virtual std::string to_string();
   protected:
     std::string _name;
     double _price;
     double _cost;
 };
-#endif

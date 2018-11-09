@@ -1,17 +1,22 @@
 #include "donut.h"
-#include <stdexcept>
-#include<iostream>
-#include<cstdlib>
+
 Donut::Donut(std::string name, double price, double cost, Frosting frosting, bool sprinkles, Filling filling)
-    : Product(name, price, cost),_frosting{frosting}, _sprinkles{sprinkles},_filling{filling} { }
+    : Product{name, price, cost}, _frosting{frosting}, _sprinkles{sprinkles}, _filling{filling} { }
 
-void Donut::to_string(){
-std::cout<<"Donut string"<<std::endl;
-};   	
-
-
-//double Gas_vehicle::gallons_consumed(double miles) {
-  //  double gallons = miles / _miles_per_gallon;
-    //if (gallons > _max_gallons) throw std::runtime_error{"Insufficient gas - need " + std::to_string(gallons)};
-    //return gallons;
-//}
+std::string Donut::to_string() {
+    std::string result = Product::to_string();
+    std::string separator = " (";
+    std::string terminator = "";
+    if (_frosting != Unfrosted) {
+        result += separator + "frosted with " + frosting_to_string[_frosting];
+        if (_sprinkles) result += " and sprinkles";
+        separator = ", ";
+        terminator = ")";
+    }
+    if (_filling != Unfilled) {
+        result += separator + "filled with " + filling_to_string[_filling];
+        terminator = ")";
+    }
+    result += terminator; 
+    return result;
+}

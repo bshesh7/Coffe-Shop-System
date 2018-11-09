@@ -1,22 +1,21 @@
-#ifndef _JAVA_H
-#define _JAVA_H
-
-#include<vector>
+#pragma once
 #include "product.h"
+#include <vector>
+#include <ostream>
 
-enum class Shot{None, Chocolate, Vanilla, Peppermint, Hazelnut};
+enum Shot {None, Chocolate, Vanilla, Peppermint, Hazelnut};
+const std::vector<std::string> shot_to_string =
+    {"none", "chocolate", "vanilla", "peppermint", "hazelnut"};
+
+const int DARK_LEVELS = 5;
 
 class Java : public Product {
   public:
-   	 Java(std::string name, double price, double cost, int darkness);
-	  void to_string();  
-	void add_shot(Shot shot); 	
-	 //double gallons_consumed(double miles);
+    Java(std::string name, double price, double cost, int darkness);
+    void add_shot(Shot shot);
+    std::string to_string() override;
   protected:
-   	 //double _miles_per_gallon;
-   	 //double _max_gallons;
-	int _darkness;
-	std::vector<Shot> _shots;
-
+    int _darkness;
+    std::vector<Shot> _shots;
 };
-#endif
+    
