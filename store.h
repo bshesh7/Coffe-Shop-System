@@ -1,5 +1,6 @@
 #pragma once
 #include "product.h"
+#include "customer.h"
 #include <vector>
 
 class Store {
@@ -11,8 +12,17 @@ class Store {
     int number_of_products(); // # of products defined
     std::string product_to_string(int product); // string version of a product
 
+	void add_customer(Customer* customer);
+	int number_of_customer();
+	std::string customer_to_string(int customer);
+	std::string customer_menu();
+	
     friend std::ostream& operator<<(std::ostream& ost, Store& store); 
-  private:
+    
+  
+private:
     std::string _name;
     std::vector<Product*> _products;
+    std::vector<Customer*> _customers;
+    
 };

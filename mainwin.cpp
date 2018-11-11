@@ -1,6 +1,7 @@
 #include "mainwin.h"
 #include "java.h"
 #include "donut.h"
+#include "dialogs.h"
 #include <ostream>
 #include <iostream>
 
@@ -48,6 +49,11 @@ Mainwin::Mainwin() : _store{Store{"JADE"}} {
     Gtk::MenuItem *menuitem_all_products = Gtk::manage(new Gtk::MenuItem("_All Products", true));
     menuitem_all_products->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_view_all_click));
     viewmenu->append(*menuitem_all_products);
+    //         A L L   C U S T O M E R S
+    // Append All Customers to the File menu
+    Gtk::MenuItem *menuitem_all_customers = Gtk::manage(new Gtk::MenuItem("_All Customers", true));
+    menuitem_all_customers->signal_activate().connect(sigc::mem_fun(*this,     &Mainwin::on_view_customer_all_click));
+    viewmenu->append(*menuitem_all_customers);
 
     //     C R E A T E   C O F F E E
     // Create a new coffee menu and add to the menu bar
@@ -68,7 +74,16 @@ Mainwin::Mainwin() : _store{Store{"JADE"}} {
     menuitem_new_donut->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_create_donut_click));
     createmenu->append(*menuitem_new_donut);
 
-    // S T A T U S   B A R   D I S P L A Y
+    //           N E W   Customer
+    // Append New Customer to the Create menu
+    menuitem_new_customer = Gtk::manage(new Gtk::MenuItem("_Customer", true));
+    menuitem_new_customer->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_create_customer_click));
+    createmenu->append(*menuitem_new_customer);
+    
+
+
+
+// S T A T U S   B A R   D I S P L A Y
     // Provide a status bar for program messages
     msg = Gtk::manage(new Gtk::Label());
     msg->set_hexpand(true);
@@ -92,6 +107,13 @@ void Mainwin::on_view_all_click() { // View all products
 }
 
 
+void Mainwin::on_view_customer_all_click() { // View all customer
+  
+   Gtk::MessageDialog d{*this, _store.customer_menu()};
+   int result = d.run();
+}
+
+
 void Mainwin::on_create_coffee_click() { // Create a new coffee product
    int darkness = rand() % DARK_LEVELS;
    double price = 5.00;
@@ -106,10 +128,50 @@ void Mainwin::on_create_coffee_click() { // Create a new coffee product
 }
 
 void Mainwin::on_create_donut_click() { // Create a new donut product
+   		std::string name;
+                int frosting, filling;
+		double price, cost;
+
+                Gtk::Dialog *dialog = new Gtk::Dialog();
+                dialog->set_title("Create Donut");
+
+                // Model Year
+                Gtk::HBox b_name;
+
+                Gtk::Label l_name{"Name:"};
+                l_name.set_width_chars(15);
+                b_name.pack_start(l_name, Gtk::PACK_SHRINK);
+
+                Gtk::Entry e_name;
+                e_name.set_max_length(50);
+                b_name.pack_start(e_name, Gtk::PACK_SHRINK);
+                dialog->get_vbox()->pack_start(b_name, Gtk::PACK_SHRINK);
+
+                // Show dialog
+                dialog->add_button("Cancel", 0);
+                dialog->add_button("OK", 1);
+                dialog->show_all();
+                int result = Dialogs::run_dialog(dialog);
+
+                dialog->close();
+                //while (Gtk::Main::events_pending())  Gtk::Main::iteration();
+
+
+
+   /*
    Frosting frosting = (Frosting)(rand()%frosting_to_string.size());
    Filling filling = (Filling)(rand()%filling_to_string.size());
    Donut* d = new Donut{"Donut", 0.75, 0.25, frosting, true, filling};
    _store.add_product(d);
+   */
+}
+
+void Mainwin::on_create_customer_click() { // Create a new customer product
+   
+	    std::string name = Dialogs::input("Customer's name? ", "Add Customer");
+            std::string phone_number = Dialogs::input("Customer's phone number? ", "Add Customer");
+            Customer* c = new Customer{name,phone_number};
+            _store.add_customer(c);
 }
 
 void Mainwin::on_quit_click() {         // Exit the program
