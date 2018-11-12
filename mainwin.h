@@ -16,6 +16,7 @@ class Mainwin : public Gtk::Window
 	void on_create_coffee_click();   // Create a new coffee product
         void on_create_donut_click();    // Create a new donut product
 	void on_create_customer_click();    // Create a new customer
+	void on_help_click(); // Help menu
     private:
         Store _store;
         Gtk::Label *msg;                      // Status message display

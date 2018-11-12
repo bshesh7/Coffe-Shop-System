@@ -24,6 +24,20 @@ std::string Store::customer_to_string(int customer) {
     return oss.str();
 }
 
+std::string Store::help() {
+    return R"(
+<span font='18' weight='bold'>JAVA COFFEE AND DONUTS Copyright Bishesh Shrestha <sup><small>™</small></sup></span>
+by Bishesh Shrestha
+
+<span font='7'>Copyright 2018. </span>
+This Program manages the coffee shop system of a store.
+
+You may create a donut or a coffee.
+And you can also add the customer. 
+With thier phone number. 
+
+)";
+}
 std::ostream& operator<<(std::ostream& ost, Store& store) {
     ost << "Store " << store._name << std::endl << std::endl;
     ost << "Products: " << std::endl;

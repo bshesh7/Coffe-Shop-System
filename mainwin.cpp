@@ -7,7 +7,8 @@
 #include <stdexcept>
 
 Mainwin::Mainwin() : _store{Store{"JADE"}} {
-
+	
+ Dialogs::set_window(*this);
     // /////////////////
     // G U I   S E T U P
     // /////////////////
@@ -81,10 +82,67 @@ Mainwin::Mainwin() : _store{Store{"JADE"}} {
     menuitem_new_customer->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_create_customer_click));
     createmenu->append(*menuitem_new_customer);
     
+    //     H E L P
+    // Create a Help menu and add to the menu bar
+    Gtk::MenuItem *menuitem_help = Gtk::manage(new Gtk::MenuItem("_Help", true));
+    menubar->append(*menuitem_help);
+    Gtk::Menu *helpmenu = Gtk::manage(new Gtk::Menu());
+    menuitem_help->set_submenu(*helpmenu);
+
+    //           H E L P
+    // Append Help to the Help menu
+    Gtk::MenuItem *menuitem_help_ = Gtk::manage(new Gtk::MenuItem("_Help", true));
+    menuitem_help_->signal_activate().connect(sigc::mem_fun(*this, &Mainwin::on_help_click));
+    helpmenu->append(*menuitem_help_);
+
+    // /////////////
+    // T O O L B A R
+    // Add a toolbar to the vertical box below the menu
+    Gtk::Toolbar *toolbar = Gtk::manage(new Gtk::Toolbar);
+    vbox->add(*toolbar);
+
+    //     N E W   C U S T O M E R S
+    // Add a new renter icon
+    Gtk::Image *new_renter_image = Gtk::manage(new Gtk::Image{"new_renter.png"});
+    Gtk::ToolButton *new_renter_button = Gtk::manage(new Gtk::ToolButton(*new_renter_image));
+    new_renter_button->set_tooltip_markup("Create a new customer");
+    new_renter_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_create_customer_click));
+    toolbar->append(*new_renter_button);   
+	
+     //     L I S T   C U S T O M E R S
+    // List renters icon
+    Gtk::Image *list_renters_image = Gtk::manage(new Gtk::Image{"list_renters.png"});
+    Gtk::ToolButton *list_renters_button = Gtk::manage(new Gtk::ToolButton(*list_renters_image));
+    list_renters_button->set_tooltip_markup("List all Customer");
+    list_renters_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_view_customer_all_click));
+    toolbar->append(*list_renters_button);
+
+    //     A D D   D O N U T
+    // 
+    Gtk::Image *add_donut_image = Gtk::manage(new Gtk::Image{"donut.png"});
+    Gtk::ToolButton *add_donut_button = Gtk::manage(new Gtk::ToolButton(*add_donut_image));
+    add_donut_button->set_tooltip_markup("ADD DONUTS");
+    add_donut_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_create_donut_click));
+    toolbar->append(*add_donut_button);
+
+    //     A D D   J A V A
+    // 
+    Gtk::Image *add_java_image = Gtk::manage(new Gtk::Image{"coffee.png"});
+    Gtk::ToolButton *add_java_button = Gtk::manage(new Gtk::ToolButton(*add_java_image));
+    add_java_button->set_tooltip_markup("ADD COFFEE");
+    add_java_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_create_coffee_click));
+    toolbar->append(*add_java_button);
+    
+    //     D I S P L A Y    P R O D U C T S
+    // 
+    Gtk::Image *list_product_image = Gtk::manage(new Gtk::Image{"coffee_and_donut.png"});
+    Gtk::ToolButton *list_product_button = Gtk::manage(new Gtk::ToolButton(*list_product_image));
+    list_product_button->set_tooltip_markup("DISPLAY PRODUCTS");
+    list_product_button->signal_clicked().connect(sigc::mem_fun(*this, &Mainwin::on_view_all_click));
+    toolbar->append(*list_product_button);
 
 
-
-// S T A T U S   B A R   D I S P L A Y
+    // S T A T U S   B A R   D I S P L A Y
     // Provide a status bar for program messages
     msg = Gtk::manage(new Gtk::Label());
     msg->set_hexpand(true);
@@ -113,7 +171,11 @@ void Mainwin::on_view_customer_all_click() { // View all customer
    Gtk::MessageDialog d{*this, _store.customer_menu()};
    int result = d.run();
 }
-
+void Mainwin::on_help_click() {            // Display help
+    
+         Dialogs::message(_store.help(), "Help");
+     
+}
 
 void Mainwin::on_create_coffee_click() { // Create a new coffee product
 		std::string name;
@@ -241,6 +303,7 @@ try{
    _store.add_product(c);
 */
 }
+
 
 void Mainwin::on_create_donut_click() { // Create a new donut product
 	 
@@ -418,6 +481,13 @@ void Mainwin::on_create_customer_click() { // Create a new customer product
 void Mainwin::on_quit_click() {         // Exit the program
     close();
 }
+   
+
+
+
+
+
+
 
 // /////////////////
 // U T I L I T I E S

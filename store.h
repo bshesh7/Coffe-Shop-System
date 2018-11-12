@@ -17,6 +17,8 @@ class Store {
 	std::string customer_to_string(int customer);
 	std::string customer_menu();
 	
+	std::string help(); // add this to UML Diagram
+
     friend std::ostream& operator<<(std::ostream& ost, Store& store); 
     
   
